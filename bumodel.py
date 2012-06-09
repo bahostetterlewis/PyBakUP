@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as xml  #holds our database object
 from os import path                  #for checking if the xml file exists
+import sys                           #allows us to abort if there is an issue
 
 '''
 This class maintains interactions between the program and the database
@@ -12,13 +13,17 @@ The first is that allows user interactions with the database file, and the secon
 is the one that is run to actually complete the backup process.
 Since it will be the common api it will save a lot of the work of duplicate programming
 
-TODO - Figure out most elegent way to create a singleton so that we aren't having to 
-       worry about multiple instances of our db, that way we don't have undefined exit behavior
+Created: Barrett Lewis
+Date: 5/7/2012
+PyBakUP
 '''
 class Model:
-  #member vars
-  _XmlTree = None
-  #end member vars
+
+#==================#
+  #member vars     #
+  _XmlTree = None  #
+  #end member vars #
+#==================#
 
   #constructor
   #pre: None
@@ -42,8 +47,16 @@ class Model:
   #post: The current version of the db is saved - incase there is some issue
   def Save(self):
     file = open('PyBakUP.xml', 'wb')
-    self._XmlTree.write(file)
+
+    try:
+      self._XmlTree.write(file)
+    except:
+      print("unable to save - xml tree is corrupt")
+      file.close()
+      sys.exit(1)
+
     file.close()
+
 
   #AddBackUpItem
   #A folder or file is added to our back up list.
@@ -55,12 +68,25 @@ class Model:
   def AddBackUpItem(self, itemLocation, itemType,itemName):
     bl = self._XmlTree.getroot().find('bl')
     backupList = bl.findall('bi')
+
+    if itemType != 'folder' and itemType != 'file':
+      return False #we had a bad entry
+
     #check to see if the backup item was already in the tree
     #if it was, exit the function
     for backupItem in backupList:
-      item = backupItem.find(itemType)
-      if folder.attrib['src'] == itemLocation:
-        return
+      item = backupItem.find('folder')
+      
+      if item == None:#if item isn't a folder then it MUST be a file
+        item = backupItem.find('file')
+
+      try:
+        if item.attrib['src'] == itemLocation or item.text == itemName:
+          return False
+      except AttributeError:
+        print("Bad xml error couldn't parse db")
+        sys.exit(1)#we need to abort and not save our db
+          
                          
     #if we reached here, the src wasn't already being backed up
     #so we add it to the list
@@ -70,28 +96,56 @@ class Model:
     newFolder.text = itemName
     newItem.append(newFolder)
     bl.append(newItem) #add the item to our back up list
-
+    return True
   
-  #TODO We need to set up an array of tuples so we can send back all pertinate info
-  #     with the list
+
   #GetBackUpList
   #PARAM self the object
-  #RETURN list of elements that are to be backed up. This can be used for display
-  #       or any other purpose we need the elements for. The list is sorted
+  #RETURN dicitonary of elements that are to be backed up. This can be used for display
+  #       or any other purpose we need the elements for. The list is NOT sorted
   def GetBackUpList(self):
     bl = self._XmlTree.getroot().find('bl')
     backupList = bl.findall('bi')
     #the list we of all file/folder names
-    backupListValues = []
+    backupListValues = {}
+    
     for backupItem in backupList:
-      itemType = "folder"#will be used for building the info tuple
+      itemType = 'folder'#will be used for building the info tuple
       item = backupItem.find(itemType)
+
       if item == None:
-        itemType = "file"
+        itemType = 'file'
         item = backupItem.find(itemType)        
-      backupListValues.append(item.text)
-      backupListValues.sort()
+
+      #there can be much more added to our tuple
+      #we just must make sure that if a value isn't set to 
+      #add a default value
+      itemData = itemType, item.attrib['src']
+      backupListValues[item.text] = itemData
+
     return backupListValues
+
+  #RemoveBackupItem
+  #pre:  The xml structure must be intact
+  #post: The internal xml tree is modified such that
+  #      the backup item sent is no longer in the tree
+  #This function gives a way of deleting an item from out
+  #xml database. It only deletes backup items.
+  #PARAM self the current object
+  #PARAM itemName the text of the item being removed
+  #PARAM itemType the type either file or folder for looking up values
+  def RemoveBackUpItem(self, itemName, itemType):
+    bl = self._XmlTree.getroot().find('bl')
+    backupList = bl.findall('bi')
+    
+    for backupItem in backupList:
+      item = backupItem.find(itemType)
+      if item != None and item.text == itemName:
+        print("\nremoving item\n")
+        bl.remove(backupItem)
+        break
+
+
 
 ''''''''''''''''''
 '''DELETE BELOW'''
@@ -100,6 +154,24 @@ class Model:
 #for the first tests of functionality
 #will be deleted
 model = Model()
-checkList = model.GetBackUpList()
-print (checkList)
-model.Save()
+
+again = True
+while again:
+  backupItems = model.GetBackUpList()
+  for item in sorted(backupItems, key = lambda item: item.lower()):
+    print (item)
+
+  action = input('Command:')                
+
+  if action == 'add':
+    itemType = input('type:')
+    location = input('location:')
+    name = input('name:')
+    model.AddBackUpItem(location, itemType, name)
+  elif action == 'save':
+    model.Save()
+  elif action == 'remove':
+    itemName = input('name')
+    model.RemoveBackUpItem(itemName, backupItems[itemName][0])
+  elif action == 'quit':
+    again = False
