@@ -2,5 +2,3 @@
 *.xml
 *.*.swp
 *.tmp
-Doxy/latex
-Doxy/man

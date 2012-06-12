@@ -2,7 +2,7 @@ import xml.etree.ElementTree as xml  #holds our database object
 from os import path                  #for checking if the xml file exists
 import sys                           #allows us to abort if there is an issue
                    
-## \class Model
+## @class Model
 #  This class maintains interactions between the program and the database
 #  It takes the xml database we create and builds our element tree.
 #  Once we have that we can run queries on it and allow for varied settings on all
@@ -13,9 +13,9 @@ import sys                           #allows us to abort if there is an issue
 #  is the one that is run to actually complete the backup process.
 #  Since it will be the common api it will save a lot of the work of duplicate programming
 #  
-#  \author Barrett Lewis
+#  @author Barrett Lewis
 #
-#  \date   5/7/2012
+#  @date   5/7/2012
 class Model:
 
   ## @var _XmlTree 
@@ -23,8 +23,8 @@ class Model:
   _XmlTree = None  
 
   ## The constructor.
-  #  \pre  None
-  #  \post Ensures the the file PyBakUP.xml exists - and if it doesn't creates it
+  #  @pre  None
+  #  @post Ensures the the file PyBakUP.xml exists - and if it doesn't creates it
   #        and leaves it.
   #  @param self The current instance pointer
   def __init__(self):
@@ -38,13 +38,13 @@ class Model:
 
 
   ## Save the document
-  #  \pre  We should have a valid xmltree to be saved
-  #  \post The current version of the db is saved.
+  #  @pre  We should have a valid xmltree to be saved
+  #  @post The current version of the db is saved.
   #        This function will attempt to write the element tree to the file, however
   #        if there is some form of corruption it will catch it and exit the program.
   #  @param self The current instance pointer
   #
-  #  \brief This function allows us to save the tree to an xml database.
+  #  @brief This function allows us to save the tree to an xml database.
   #  It essentially overwrites the whole file because the tree in memory
   #  is the most recent version. If an exception is raised, then the program will abort
   #  after closing the file.
@@ -62,15 +62,15 @@ class Model:
 
 
   ## Add a new backup item to our database
-  #  \pre  We must give either a file or folder.
-  #  \post The new backup item is created and added to the element tree
+  #  @pre  We must give either a file or folder.
+  #  @post The new backup item is created and added to the element tree
   #  @param self The current instance pointer
   #  @param itemLocation a file on the disk to be inserted into the backup list
   #  @param itemType should be either file or folder
   #  @param itemName the name that will be displayed to the user
-  #  \retval bool true if element was inserted false otherwise
+  #  @retval bool true if element was inserted false otherwise
   #
-  #  \brief A folder or file is added to our back up list.
+  #  @brief A folder or file is added to our back up list.
   #  This includes adding the source, name, and type to the back up item
   #  It doesn't actually perform the insert until it is confirmed that the new entry
   #  isn't a duplicate.
@@ -109,13 +109,13 @@ class Model:
   
 
   ## Get a detailed list of elements in the database
-  #  \pre  The tree must not be corrupt
-  #  \post None
+  #  @pre  The tree must not be corrupt
+  #  @post None
   #  @param self The current instance pointer
-  #  \retval dicitonary The elements in the backup list are placed inside this dictionary 
+  #  @retval dicitonary The elements in the backup list are placed inside this dictionary 
   #                     of tuples containing the elements data. 
   #
-  #  \brief This function is used to get detailed information about the items in the backup
+  #  @brief This function is used to get detailed information about the items in the backup
   #         list. It gives the program a way to take all the attributes associated with
   #         a given node and apply it to however is necessary. The dictionary is indexed
   #         by the nodes text value.
@@ -142,14 +142,14 @@ class Model:
     return backupListValues
 
   ## Remove a backup item from the database
-  #  \pre  The xml structure must be intact
-  #  \post The internal xml tree is modified such that
+  #  @pre  The xml structure must be intact
+  #  @post The internal xml tree is modified such that
   #        the backup item sent is no longer in the tree
   #  @param self The current instance pointer
   #  @param itemName the text of the item being removed
   #  @param itemType the type either file or folder for looking up values
   #
-  #  \brief This function gives a way of deleting an item from out
+  #  @brief This function gives a way of deleting an item from out
   #         xml database. It only deletes backup items.
   def RemoveBackUpItem(self, itemName, itemType):
     bl = self._XmlTree.getroot().find('bl')
@@ -158,7 +158,7 @@ class Model:
     for backupItem in backupList:
       item = backupItem.find(itemType)
       if item != None and item.text == itemName:
-        print("\nremoving item\n")
+        print("@nremoving item\n")
         bl.remove(backupItem)
         break
 
