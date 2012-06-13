@@ -1,9 +1,18 @@
 import xml.etree.ElementTree as xml  #holds our database object
 from os import path                  #for checking if the xml file exists
 import sys                           #allows us to abort if there is an issue
+
+## @package bumodel
+#  This contains the definitions for our model object.
+#
+#  This package holds the classes used for maintaining our data structure and
+#  local database.
+#  @author Barrett Hostetter-Lewis
+#  @date   5/7/2012
                    
-## @class Model
-#  This class maintains interactions between the program and the database
+## The data model.
+#  This class maintains interactions between the program and the database.
+#
 #  It takes the xml database we create and builds our element tree.
 #  Once we have that we can run queries on it and allow for varied settings on all
 #  back up items in the database.
@@ -12,15 +21,12 @@ import sys                           #allows us to abort if there is an issue
 #  The first is that allows user interactions with the database file, and the second
 #  is the one that is run to actually complete the backup process.
 #  Since it will be the common api it will save a lot of the work of duplicate programming
-#  
-#  @author Barrett Lewis
-#
-#  @date   5/7/2012
 class Model:
 
   ## @var _XmlTree 
   #  The xml element tree
-  _XmlTree = None  
+  _XmlTree = None
+
 
   ## The constructor.
   #  @pre  None
@@ -37,7 +43,7 @@ class Model:
     self._XmlTree = xml.parse('PyBakUP.xml')#parse our tree
 
 
-  ## Save the document
+  ## Save the document.
   #  @pre  We should have a valid xmltree to be saved
   #  @post The current version of the db is saved.
   #        This function will attempt to write the element tree to the file, however
@@ -55,13 +61,10 @@ class Model:
       self._XmlTree.write(file)
     except:
       print("unable to save - xml tree is corrupt")
+    finally:
       file.close()
-      sys.exit(1)
 
-    file.close()
-
-
-  ## Add a new backup item to our database
+  ## Add a new backup item to our database.
   #  @pre  We must give either a file or folder.
   #  @post The new backup item is created and added to the element tree
   #  @param self The current instance pointer
@@ -108,7 +111,7 @@ class Model:
     return True
   
 
-  ## Get a detailed list of elements in the database
+  ## Get a detailed list of elements in the database.
   #  @pre  The tree must not be corrupt
   #  @post None
   #  @param self The current instance pointer
@@ -141,7 +144,7 @@ class Model:
 
     return backupListValues
 
-  ## Remove a backup item from the database
+  ## Remove a backup item from the database.
   #  @pre  The xml structure must be intact
   #  @post The internal xml tree is modified such that
   #        the backup item sent is no longer in the tree
@@ -162,7 +165,24 @@ class Model:
         bl.remove(backupItem)
         break
 
-
+  ## Modify an attribute for a backup item
+  #  @pre  The xml structure must be intact, the element should
+  #        have the given attribute.
+  #  @post The element tree is modified so the backup item with the text
+  #        provided will have a modified attribute set to the value passed
+  #        to this function.
+  #  @param self The current instance pointer
+  #  @param itemName The name of the item being modified
+  #  @param attribute The attribute of the item being modifiied
+  #  @param attributeValue The new value of the attribute
+  #  @retval bool This will be true if the attribute was successfully set, false otherwise
+  #  @brief This function allows us to make changes to the database so that
+  #         any attribute can be modified for the backup items. Basically,
+  #         these items are used to determine the settings for an element. This allows us
+  #         to change them as needed.
+  #  @todo Implement this function
+  def ModifyBackupItemAttribute(self, itemName, attribute, attributeValue):
+    raise NotImplementedError('This is not implemented yet')
 
 ''''''''''''''''''
 '''DELETE BELOW'''
@@ -192,3 +212,6 @@ while again:
     model.RemoveBackUpItem(itemName, backupItems[itemName][0])
   elif action == 'quit':
     again = False
+  elif action == 'mod':
+    model.ModifyBackupItemAttribute('','','')
+
