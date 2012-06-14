@@ -78,15 +78,15 @@ class Model:
   #  It doesn't actually perform the insert until it is confirmed that the new entry
   #  isn't a duplicate.
   def AddBackUpItem(self, itemLocation, itemType,itemName):
-    bl = self._XmlTree.getroot().find('bl')
-    backupList = bl.findall('bi')
+    bl = self.GetBackupList()
+    backupItems = bl.findall('bi')
 
     if itemType != 'folder' and itemType != 'file':
       return False #we had a bad entry
 
     #check to see if the backup item was already in the tree
     #if it was, exit the function
-    for backupItem in backupList:
+    for backupItem in backupItems:
       item = backupItem.find('folder')
       
       if item == None:#if item isn't a folder then it MUST be a file
@@ -103,9 +103,11 @@ class Model:
     #if we reached here, the src wasn't already being backed up
     #so we add it to the list
     newItem = xml.Element('bi')
+    newName = xml.Element('name')
+    newName.text = itemName
     newFolder = xml.Element(itemType)
     newFolder.attrib['src'] = itemLocation
-    newFolder.text = itemName
+    newItem.append(newName)
     newItem.append(newFolder)
     bl.append(newItem) #add the item to our back up list
     return True
@@ -123,12 +125,12 @@ class Model:
   #         a given node and apply it to however is necessary. The dictionary is indexed
   #         by the nodes text value.
   def GetBackUpList(self):
-    bl = self._XmlTree.getroot().find('bl')
-    backupList = bl.findall('bi')
+    bl = self.GetBackupList()
+    backupItems = bl.findall('bi')
     #the list we of all file/folder names
-    backupListValues = {}
+    backupItemsValues = {}
     
-    for backupItem in backupList:
+    for backupItem in backupItems:
       itemType = 'folder'#will be used for building the info tuple
       item = backupItem.find(itemType)
 
@@ -140,9 +142,9 @@ class Model:
       #we just must make sure that if a value isn't set to 
       #add a default value
       itemData = itemType, item.attrib['src']
-      backupListValues[item.text] = itemData
+      backupItemsValues[item.text] = itemData
 
-    return backupListValues
+    return backupItemsValues
 
   ## Remove a backup item from the database.
   #  @pre  The xml structure must be intact
@@ -155,17 +157,17 @@ class Model:
   #  @brief This function gives a way of deleting an item from out
   #         xml database. It only deletes backup items.
   def RemoveBackUpItem(self, itemName, itemType):
-    bl = self._XmlTree.getroot().find('bl')
-    backupList = bl.findall('bi')
+    bl = self.GetBackupList()
+    backupItems = bl.findall('bi')
     
-    for backupItem in backupList:
+    for backupItem in backupItems:
       item = backupItem.find(itemType)
       if item != None and item.text == itemName:
         print("@nremoving item\n")
         bl.remove(backupItem)
         break
 
-  ## Modify an attribute for a backup item
+  ## Modify an attribute for a backup item.
   #  @pre  The xml structure must be intact, the element should
   #        have the given attribute.
   #  @post The element tree is modified so the backup item with the text
@@ -182,7 +184,26 @@ class Model:
   #         to change them as needed.
   #  @todo Implement this function
   def ModifyBackupItemAttribute(self, itemName, attribute, attributeValue):
-    raise NotImplementedError('This is not implemented yet')
+    bl = self.GetBackupList()
+    backupItems = bl.findall('bi')
+    
+    for backupItem in backupItems:
+      if backupItem.text == itemName:# and any(attribute in itemAttribute for  itemAttribute in backupItem.attrib):
+        backupItem.attrib[attribute] = attributeValue
+        break
+
+
+  ## Get the backup list from the element tree.
+  #  @pre  The xml structure should be intact, and there should be
+  #        a backup list tag(no more than one) denoted by <bl> </bl>
+  #  @post None
+  #  @param self the current instance
+  #  @retval element The backup liste element instance
+  #  @brief This function is mainly a helper for use inside of the model class
+  #         by allowing a simple easy to read way of getting back the backup list
+  #         element directly.                               
+  def GetBackupList(self):
+    return self._XmlTree.getroot().find('bl')
 
 ''''''''''''''''''
 '''DELETE BELOW'''
@@ -205,6 +226,7 @@ while again:
     location = input('location:')
     name = input('name:')
     model.AddBackUpItem(location, itemType, name)
+    model.Save()
   elif action == 'save':
     model.Save()
   elif action == 'remove':
@@ -213,5 +235,7 @@ while again:
   elif action == 'quit':
     again = False
   elif action == 'mod':
-    model.ModifyBackupItemAttribute('','','')
+    model.ModifyBackupItemAttribute('bethy','src','My Heart')
+
+  print('\n\n')
 

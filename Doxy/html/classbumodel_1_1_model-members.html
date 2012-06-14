@@ -38,6 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -69,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -80,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>bumodel</b></li><li class="navelem"><a class="el" href="classbumodel_1_1_model.html">Model</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacebumodel.html">bumodel</a></li><li class="navelem"><a class="el" href="classbumodel_1_1_model.html">Model</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -92,14 +93,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>This is the complete list of members for <a class="el" href="classbumodel_1_1_model.html">bumodel.Model</a>, including all inherited members.</p>
 <table class="directory">
   <tr class="even"><td class="entry"><a class="el" href="classbumodel_1_1_model.html#a1c74e4f8e50b85b18ba5a811a893046c">__init__</a></td><td class="entry"><a class="el" href="classbumodel_1_1_model.html">bumodel.Model</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classbumodel_1_1_model.html#aa028363d5ff25fa3b938813cef2998bb">AddBackUpItem</a></td><td class="entry"><a class="el" href="classbumodel_1_1_model.html">bumodel.Model</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classbumodel_1_1_model.html#af7685f649eb979dd4e712380cd00416b">GetBackUpList</a></td><td class="entry"><a class="el" href="classbumodel_1_1_model.html">bumodel.Model</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classbumodel_1_1_model.html#a39d52acd9a7da0540da5b9f8780c5ec9">RemoveBackUpItem</a></td><td class="entry"><a class="el" href="classbumodel_1_1_model.html">bumodel.Model</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classbumodel_1_1_model.html#a4a175145183882d82ab6c407496e39c0">Save</a></td><td class="entry"><a class="el" href="classbumodel_1_1_model.html">bumodel.Model</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classbumodel_1_1_model.html#a56a5a93332501233f3d88da4961e119b">_XmlTree</a></td><td class="entry"><a class="el" href="classbumodel_1_1_model.html">bumodel.Model</a></td><td class="entry"><span class="mlabel">private</span><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classbumodel_1_1_model.html#aa028363d5ff25fa3b938813cef2998bb">AddBackUpItem</a></td><td class="entry"><a class="el" href="classbumodel_1_1_model.html">bumodel.Model</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classbumodel_1_1_model.html#af7685f649eb979dd4e712380cd00416b">GetBackUpList</a></td><td class="entry"><a class="el" href="classbumodel_1_1_model.html">bumodel.Model</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classbumodel_1_1_model.html#a39d52acd9a7da0540da5b9f8780c5ec9">RemoveBackUpItem</a></td><td class="entry"><a class="el" href="classbumodel_1_1_model.html">bumodel.Model</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classbumodel_1_1_model.html#a4a175145183882d82ab6c407496e39c0">Save</a></td><td class="entry"><a class="el" href="classbumodel_1_1_model.html">bumodel.Model</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jun 12 2012 03:26:23 for Python Bakup Utility: PyBakUP by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jun 13 2012 01:20:41 for Python Bakup Utility: PyBakUP by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.1
 </small></address>
