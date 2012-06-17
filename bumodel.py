@@ -31,17 +31,19 @@ class Model:
   ## The constructor.
   #  @pre  None
   #  @post Ensures the the file PyBakUP.xml exists - and if it doesn't creates it
-  #        and leaves it.
+  #        and saves it.
   #  @param self The current instance pointer
+  #  @todo Decide whether or not to save on a bad parse (my assumption is that we have a bad xml file and i'm not sure how to recover from that yet)
   def __init__(self):
     if not path.exists('PyBakUP.xml'): #if the file doens't exist lets make it and set defaults
-      root = xml.Element('backdb')
-      root.append(xml.Element('bl'))
-      file = open('PyBakUP.xml', 'wb')
-      xml.ElementTree(root).write(file)
-      file.close()
-    self._XmlTree = xml.parse('PyBakUP.xml')#parse our tree
-
+      self._InitElementTree()  
+      self.Save()
+    else:
+      try: #we need to attempt a parse. If there is an issue with the parse we recreate the file
+        self._XmlTree = xml.parse('PyBakUP.xml')#parse our tree
+      except:
+        self._InitElementTree()
+        self.Save() #This is up in the air
 
   ## Save the document.
   #  @pre  We should have a valid xmltree to be saved
@@ -58,7 +60,7 @@ class Model:
     file = open('PyBakUP.xml', 'wb')
 
     try:
-      self._XmlTree.write(file)
+      self._XmlTree.write(file, xml_declaration=True, encoding='utf-8', method='xml')
     except:
       print("unable to save - xml tree is corrupt")
     finally:
@@ -68,48 +70,50 @@ class Model:
   #  @pre  We must give either a file or folder.
   #  @post The new backup item is created and added to the element tree
   #  @param self The current instance pointer
-  #  @param itemLocation a file on the disk to be inserted into the backup list
-  #  @param itemType should be either file or folder
-  #  @param itemName the name that will be displayed to the user
-  #  @retval bool true if element was inserted false otherwise
+  #  @param source A file or folder on the disk to be inserted into the backup list
+  #  @param itemType Should be either file or folder
+  #  @param title The name that will be displayed to the user
+  #  @param description (Optional)An optional description of the backup item. Defaults to an empty string
+  #  @retval bool True if element was inserted false otherwise
   #
   #  @brief A folder or file is added to our back up list.
   #  This includes adding the source, name, and type to the back up item
   #  It doesn't actually perform the insert until it is confirmed that the new entry
   #  isn't a duplicate.
-  def AddBackUpItem(self, itemLocation, itemType,itemName):
-    bl = self.GetBackupList()
+  def AddBackUpItem(self, source, itemType, title, description=''):
+    bl = self._GetBackupList()
     backupItems = bl.findall('bi')
 
-    if itemType != 'folder' and itemType != 'file':
+    #here we check to ensure the type was set
+    #we also ensure that the source isn't already backed up
+    if (itemType != 'folder' and itemType != 'file') or any(item.get('src', '') == source for item in backupItems):
       return False #we had a bad entry
 
-    #check to see if the backup item was already in the tree
-    #if it was, exit the function
-    for backupItem in backupItems:
-      item = backupItem.find('folder')
-      
-      if item == None:#if item isn't a folder then it MUST be a file
-        item = backupItem.find('file')
-
-      try:
-        if item.attrib['src'] == itemLocation or item.text == itemName:
-          return False
-      except AttributeError:
-        print("Bad xml error couldn't parse db")
-        sys.exit(1)#we need to abort and not save our db
-          
-                         
     #if we reached here, the src wasn't already being backed up
     #so we add it to the list
+
+    #create the item itself
     newItem = xml.Element('bi')
-    newName = xml.Element('name')
-    newName.text = itemName
-    newFolder = xml.Element(itemType)
-    newFolder.attrib['src'] = itemLocation
-    newItem.append(newName)
-    newItem.append(newFolder)
-    bl.append(newItem) #add the item to our back up list
+    newItem.set('type', itemType)
+    newItem.set('src', source)
+    #create the frequency element
+    newItemFrequency = xml.Element('frequency')
+    newItemFrequency.set('condition','Default')
+    newItemFrequency.set('last', 'never')
+    newItem.append(newItemFrequency)
+    #create the title
+    newTitle = xml.Element('title')
+    newTitle.text = title
+    newItem.append(newTitle)
+
+    #create the description if set
+    if description :
+      newItemDescription = xml.Element('description')
+      newItemDescription.text = description
+      newItem.append(newItemDescription)
+
+    #finally, add the newly built backup item to our element tree
+    bl.append(newItem)
     return True
   
 
@@ -118,31 +122,39 @@ class Model:
   #  @post None
   #  @param self The current instance pointer
   #  @retval dicitonary The elements in the backup list are placed inside this dictionary 
-  #                     of tuples containing the elements data. 
+  #                     of dictionaries containing each items data.
   #
   #  @brief This function is used to get detailed information about the items in the backup
   #         list. It gives the program a way to take all the attributes associated with
   #         a given node and apply it to however is necessary. The dictionary is indexed
-  #         by the nodes text value.
-  def GetBackUpList(self):
-    bl = self.GetBackupList()
+  #         by the items title.
+  def GetBackUpData(self):
+    bl = self._GetBackupList()
     backupItems = bl.findall('bi')
     #the list we of all file/folder names
     backupItemsValues = {}
-    
+
     for backupItem in backupItems:
-      itemType = 'folder'#will be used for building the info tuple
-      item = backupItem.find(itemType)
+      itemData = {}
+      #get item details
+      itemData['source'] = backupItem.get('src')
+      itemData['type'] = backupItem.get('type')
+      #get item backup preferences
+      frequency = backupItem.find('frequency')
+      itemData['last'] = frequency.get('last')
+      itemData['condition'] = frequency.get('condition')
+      #get item description
+      description = backupItem.find('description')
+      descriptionText = ''
+      if description != None:
+        descriptionText = description.text
+      itemData['description'] = descriptionText
+      
+      #get item name
+      name = backupItem.find('title').text
 
-      if item == None:
-        itemType = 'file'
-        item = backupItem.find(itemType)        
-
-      #there can be much more added to our tuple
-      #we just must make sure that if a value isn't set to 
-      #add a default value
-      itemData = itemType, item.attrib['src']
-      backupItemsValues[item.text] = itemData
+      #add our info to the list
+      backupItemsValues[name] = itemData
 
     return backupItemsValues
 
@@ -151,47 +163,52 @@ class Model:
   #  @post The internal xml tree is modified such that
   #        the backup item sent is no longer in the tree
   #  @param self The current instance pointer
-  #  @param itemName the text of the item being removed
-  #  @param itemType the type either file or folder for looking up values
+  #  @param source The source that is being removed from the database
   #
   #  @brief This function gives a way of deleting an item from out
   #         xml database. It only deletes backup items.
-  def RemoveBackUpItem(self, itemName, itemType):
-    bl = self.GetBackupList()
+  def RemoveBackUpItem(self, source):
+    bl = self._GetBackupList()
     backupItems = bl.findall('bi')
     
     for backupItem in backupItems:
-      item = backupItem.find(itemType)
-      if item != None and item.text == itemName:
-        print("@nremoving item\n")
+      if backupItem.get('src') == source:
         bl.remove(backupItem)
         break
 
-  ## Modify an attribute for a backup item.
-  #  @pre  The xml structure must be intact, the element should
-  #        have the given attribute.
-  #  @post The element tree is modified so the backup item with the text
-  #        provided will have a modified attribute set to the value passed
-  #        to this function.
+  ## Modify an attribute of a backup item
+  #  @pre  The xml structure must be intact, the new attributeValue
+  #        should be a valid value.
+  #  @post The item of the given source will have its selected attribute changed
   #  @param self The current instance pointer
-  #  @param itemName The name of the item being modified
-  #  @param attribute The attribute of the item being modifiied
-  #  @param attributeValue The new value of the attribute
-  #  @retval bool This will be true if the attribute was successfully set, false otherwise
-  #  @brief This function allows us to make changes to the database so that
-  #         any attribute can be modified for the backup items. Basically,
-  #         these items are used to determine the settings for an element. This allows us
-  #         to change them as needed.
-  #  @todo Implement this function
-  def ModifyBackupItemAttribute(self, itemName, attribute, attributeValue):
-    bl = self.GetBackupList()
+  #  @param source The source of the item that is going to be modified
+  #  @param attribute The name of the attribute that is going to be modified
+  #  @param attribteValue The new value of the attribute being modified
+  #
+  #  @brief This function gives the user a way of modify any of the valid
+  #         attributes for a backup item. It handles modifying at any
+  #         level of nesting that is needed for the attribute.
+  def ModifyItem(self, source, attribute, attributeValue):
+    bl = self._GetBackupList()
     backupItems = bl.findall('bi')
-    
-    for backupItem in backupItems:
-      if backupItem.text == itemName:# and any(attribute in itemAttribute for  itemAttribute in backupItem.attrib):
-        backupItem.attrib[attribute] = attributeValue
-        break
 
+    itemForModification = None
+    for backupItem in backupItems:
+      if backupItem.get('src') == source:
+        itemForModification = backupItem
+    
+    if itemForModification == None: #ensure that we actually have an item to modify
+      return
+
+    if attribute == 'last' or attribute == 'condition': #changing frequency condition or last
+      frequency = itemForModification.find('frequency')
+      frequency.set(attribute, attributeValue)
+    elif attribute == 'title':#changing title
+      title = itemForModification.find('title')
+      title.text = attributeValue
+    elif attribute == 'description':#changing description
+      description = itemForModification.find('description')
+      description.text = attributeValue
 
   ## Get the backup list from the element tree.
   #  @pre  The xml structure should be intact, and there should be
@@ -202,8 +219,20 @@ class Model:
   #  @brief This function is mainly a helper for use inside of the model class
   #         by allowing a simple easy to read way of getting back the backup list
   #         element directly.                               
-  def GetBackupList(self):
+  def _GetBackupList(self):
     return self._XmlTree.getroot().find('bl')
+
+  ## Initialize an empty tree
+  #  @pre  The main _XmlTree variable should NOT be set at this point
+  #  @post The main _XmlTree variable is now set to an empty database
+  #        effictively initializing the primary database to its minimal working
+  #        state.
+  #  @brief This function is a utility function for creating and setting up a default
+  #         element tree. This allows us to create a new tree on the fly when necessary.
+  def _InitElementTree(self):
+    root = xml.Element('backdb')
+    root.append(xml.Element('bl'))
+    self._XmlTree = xml.ElementTree(root)
 
 ''''''''''''''''''
 '''DELETE BELOW'''
@@ -215,27 +244,30 @@ model = Model()
 
 again = True
 while again:
-  backupItems = model.GetBackUpList()
+  backupItems = model.GetBackUpData()
   for item in sorted(backupItems, key = lambda item: item.lower()):
     print (item)
 
   action = input('Command:')                
 
+  #def AddBackUpItem(self, source, itemType, title, description=''):
   if action == 'add':
     itemType = input('type:')
     location = input('location:')
     name = input('name:')
-    model.AddBackUpItem(location, itemType, name)
-    model.Save()
+    description = input('description:')
+    model.AddBackUpItem(location, itemType, name, description)
   elif action == 'save':
     model.Save()
   elif action == 'remove':
-    itemName = input('name')
-    model.RemoveBackUpItem(itemName, backupItems[itemName][0])
+    itemName = input('name:')
+    model.RemoveBackUpItem(backupItems[itemName]['source'])
   elif action == 'quit':
     again = False
   elif action == 'mod':
-    model.ModifyBackupItemAttribute('bethy','src','My Heart')
+    model.ModifyItem('c:','description','testval')
+  elif action == 'print':
+    itemName = input('name:')
+    print(backupItems.get(itemName, ''))
 
   print('\n\n')
-
