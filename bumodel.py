@@ -270,4 +270,4 @@ while again:
     itemName = input('name:')
     print(backupItems.get(itemName, ''))
 
-  print('\n\n')
+  print('\n')
