@@ -38,6 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
@@ -70,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -87,6 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-static-attribs">Static Private Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">bumodel.Model Class Reference</div>  </div>
@@ -106,10 +108,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a4a175145183882d82ab6c407496e39c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save the document.  <a href="#a4a175145183882d82ab6c407496e39c0"></a><br/></td></tr>
 <tr class="memitem:aa028363d5ff25fa3b938813cef2998bb"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbumodel_1_1_model.html#aa028363d5ff25fa3b938813cef2998bb">AddBackUpItem</a></td></tr>
 <tr class="memdesc:aa028363d5ff25fa3b938813cef2998bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new backup item to our database.  <a href="#aa028363d5ff25fa3b938813cef2998bb"></a><br/></td></tr>
-<tr class="memitem:af7685f649eb979dd4e712380cd00416b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbumodel_1_1_model.html#af7685f649eb979dd4e712380cd00416b">GetBackUpList</a></td></tr>
-<tr class="memdesc:af7685f649eb979dd4e712380cd00416b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a detailed list of elements in the database.  <a href="#af7685f649eb979dd4e712380cd00416b"></a><br/></td></tr>
+<tr class="memitem:ab88d2e554b6578e0759fd9d4231081cc"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbumodel_1_1_model.html#ab88d2e554b6578e0759fd9d4231081cc">GetBackUpData</a></td></tr>
+<tr class="memdesc:ab88d2e554b6578e0759fd9d4231081cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a detailed list of elements in the database.  <a href="#ab88d2e554b6578e0759fd9d4231081cc"></a><br/></td></tr>
 <tr class="memitem:a39d52acd9a7da0540da5b9f8780c5ec9"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbumodel_1_1_model.html#a39d52acd9a7da0540da5b9f8780c5ec9">RemoveBackUpItem</a></td></tr>
 <tr class="memdesc:a39d52acd9a7da0540da5b9f8780c5ec9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a backup item from the database.  <a href="#a39d52acd9a7da0540da5b9f8780c5ec9"></a><br/></td></tr>
+<tr class="memitem:aba9ece059cb2c118b3dbdaaa88e4e096"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbumodel_1_1_model.html#aba9ece059cb2c118b3dbdaaa88e4e096">ModifyItem</a></td></tr>
+<tr class="memdesc:aba9ece059cb2c118b3dbdaaa88e4e096"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify an attribute of a backup item.  <a href="#aba9ece059cb2c118b3dbdaaa88e4e096"></a><br/></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a6181f3dce92399bfc4ad9ef6492af74a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbumodel_1_1_model.html#a6181f3dce92399bfc4ad9ef6492af74a">_GetBackupList</a></td></tr>
+<tr class="memdesc:a6181f3dce92399bfc4ad9ef6492af74a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the backup list from the element tree.  <a href="#a6181f3dce92399bfc4ad9ef6492af74a"></a><br/></td></tr>
+<tr class="memitem:a58fb7c6e2de1f428acfc7ba23eb47bbe"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbumodel_1_1_model.html#a58fb7c6e2de1f428acfc7ba23eb47bbe">_InitElementTree</a></td></tr>
+<tr class="memdesc:a58fb7c6e2de1f428acfc7ba23eb47bbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize an empty tree.  <a href="#a58fb7c6e2de1f428acfc7ba23eb47bbe"></a><br/></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
@@ -138,17 +149,86 @@ Static Private Attributes</h2></td></tr>
 
 <p>The constructor. </p>
 <dl class="section pre"><dt>Precondition:</dt><dd>None </dd></dl>
-<dl class="section post"><dt>Postcondition:</dt><dd>Ensures the the file PyBakUP.xml exists - and if it doesn't creates it and leaves it. </dd></dl>
+<dl class="section post"><dt>Postcondition:</dt><dd>Ensures the the file PyBakUP.xml exists - and if it doesn't creates it and saves it. </dd></dl>
 <dl class="params"><dt>Parameters:</dt><dd>
   <table class="params">
     <tr><td class="paramname">self</td><td>The current instance pointer </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Decide whether or not to save on a bad parse (my assumption is that we have a bad xml file and i'm not sure how to recover from that yet) </dd></dl>
 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a6181f3dce92399bfc4ad9ef6492af74a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">def bumodel.Model._GetBackupList </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the backup list from the element tree. </p>
+<dl class="section pre"><dt>Precondition:</dt><dd>The xml structure should be intact, and there should be a backup list tag(no more than one) </dd></dl>
+<dl class="section post"><dt>Postcondition:</dt><dd>None </dd></dl>
+<dl class="params"><dt>Parameters:</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">self</td><td>the current instance </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values:</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">element</td><td>The backup liste element instance This function is mainly a helper for use inside of the model class by allowing a simple easy to read way of getting back the backup list element directly. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a58fb7c6e2de1f428acfc7ba23eb47bbe"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">def bumodel.Model._InitElementTree </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initialize an empty tree. </p>
+<dl class="section pre"><dt>Precondition:</dt><dd>The main _XmlTree variable should NOT be set at this point </dd></dl>
+<dl class="section post"><dt>Postcondition:</dt><dd>The main _XmlTree variable is now set to an empty database effictively initializing the primary database to its minimal working state. This function is a utility function for creating and setting up a default element tree. This allows us to create a new tree on the fly when necessary. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="aa028363d5ff25fa3b938813cef2998bb"></a>
 <div class="memitem">
 <div class="memproto">
@@ -163,7 +243,7 @@ Static Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>itemLocation</em>, </td>
+          <td class="paramname"><em>source</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -175,7 +255,13 @@ Static Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>itemName</em>&#160;</td>
+          <td class="paramname"><em>title</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>description</em> = <code>''</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -191,15 +277,16 @@ Static Private Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters:</dt><dd>
   <table class="params">
     <tr><td class="paramname">self</td><td>The current instance pointer </td></tr>
-    <tr><td class="paramname">itemLocation</td><td>a file on the disk to be inserted into the backup list </td></tr>
-    <tr><td class="paramname">itemType</td><td>should be either file or folder </td></tr>
-    <tr><td class="paramname">itemName</td><td>the name that will be displayed to the user </td></tr>
+    <tr><td class="paramname">source</td><td>A file or folder on the disk to be inserted into the backup list </td></tr>
+    <tr><td class="paramname">itemType</td><td>Should be either file or folder </td></tr>
+    <tr><td class="paramname">title</td><td>The name that will be displayed to the user </td></tr>
+    <tr><td class="paramname">description</td><td>(Optional)An optional description of the backup item. Defaults to an empty string </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values:</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">bool</td><td>true if element was inserted false otherwise</td></tr>
+    <tr><td class="paramname">bool</td><td>True if element was inserted false otherwise</td></tr>
   </table>
   </dd>
 </dl>
@@ -207,12 +294,12 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af7685f649eb979dd4e712380cd00416b"></a>
+<a class="anchor" id="ab88d2e554b6578e0759fd9d4231081cc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def bumodel.Model.GetBackUpList </td>
+          <td class="memname">def bumodel.Model.GetBackUpData </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>self</em></td><td>)</td>
@@ -232,11 +319,63 @@ Static Private Attributes</h2></td></tr>
 </dl>
 <dl class="retval"><dt>Return values:</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">dicitonary</td><td>The elements in the backup list are placed inside this dictionary of tuples containing the elements data.</td></tr>
+    <tr><td class="paramname">dicitonary</td><td>The elements in the backup list are placed inside this dictionary of dictionaries containing each items data.</td></tr>
   </table>
   </dd>
 </dl>
-<p>This function is used to get detailed information about the items in the backup list. It gives the program a way to take all the attributes associated with a given node and apply it to however is necessary. The dictionary is indexed by the nodes text value. </p>
+<p>This function is used to get detailed information about the items in the backup list. It gives the program a way to take all the attributes associated with a given node and apply it to however is necessary. The dictionary is indexed by the items title. </p>
+
+</div>
+</div>
+<a class="anchor" id="aba9ece059cb2c118b3dbdaaa88e4e096"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def bumodel.Model.ModifyItem </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>attribute</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>attributeValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Modify an attribute of a backup item. </p>
+<dl class="section pre"><dt>Precondition:</dt><dd>The xml structure must be intact, the new attributeValue should be a valid value. </dd></dl>
+<dl class="section post"><dt>Postcondition:</dt><dd>The item of the given source will have its selected attribute changed </dd></dl>
+<dl class="params"><dt>Parameters:</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">self</td><td>The current instance pointer </td></tr>
+    <tr><td class="paramname">source</td><td>The source of the item that is going to be modified </td></tr>
+    <tr><td class="paramname">attribute</td><td>The name of the attribute that is going to be modified </td></tr>
+    <tr><td class="paramname">attributeValue</td><td>The new value of the attribute being modified</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function gives the user a way of modify any of the valid attributes for a backup item. It handles modifying at any level of nesting that is needed for the attribute. </p>
 
 </div>
 </div>
@@ -254,13 +393,7 @@ Static Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>itemName</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>itemType</em>&#160;</td>
+          <td class="paramname"><em>source</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -276,8 +409,7 @@ Static Private Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters:</dt><dd>
   <table class="params">
     <tr><td class="paramname">self</td><td>The current instance pointer </td></tr>
-    <tr><td class="paramname">itemName</td><td>the text of the item being removed </td></tr>
-    <tr><td class="paramname">itemType</td><td>the type either file or folder for looking up values</td></tr>
+    <tr><td class="paramname">source</td><td>The source that is being removed from the database</td></tr>
   </table>
   </dd>
 </dl>
@@ -318,7 +450,7 @@ Static Private Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 13 2012 01:20:41 for Python Bakup Utility: PyBakUP by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jun 17 2012 17:39:05 for Python Bakup Utility: PyBakUP by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.1
 </small></address>

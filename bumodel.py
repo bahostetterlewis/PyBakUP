@@ -183,7 +183,7 @@ class Model:
   #  @param self The current instance pointer
   #  @param source The source of the item that is going to be modified
   #  @param attribute The name of the attribute that is going to be modified
-  #  @param attribteValue The new value of the attribute being modified
+  #  @param attributeValue The new value of the attribute being modified
   #
   #  @brief This function gives the user a way of modify any of the valid
   #         attributes for a backup item. It handles modifying at any
@@ -212,7 +212,7 @@ class Model:
 
   ## Get the backup list from the element tree.
   #  @pre  The xml structure should be intact, and there should be
-  #        a backup list tag(no more than one) denoted by <bl> </bl>
+  #        a backup list tag(no more than one)
   #  @post None
   #  @param self the current instance
   #  @retval element The backup liste element instance
