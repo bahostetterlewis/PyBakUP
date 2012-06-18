@@ -234,12 +234,9 @@ class Model:
     root.append(xml.Element('bl'))
     self._XmlTree = xml.ElementTree(root)
 
-''''''''''''''''''
-'''DELETE BELOW'''
-''''''''''''''''''
-#temporary interface to the model
+''' 
+#This is a testing interface for the model
 #for the first tests of functionality
-#will be deleted
 model = Model()
 
 again = True
@@ -271,3 +268,4 @@ while again:
     print(backupItems.get(itemName, ''))
 
   print('\n')
+'''
