@@ -1,4 +1,4 @@
 from tkinter import ttk
-from bumodel import Model
+import bumodel
 
-
+instance = bumodel.GetInstance()

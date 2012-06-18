@@ -9,7 +9,7 @@ import sys                           #allows us to abort if there is an issue
 #  local database.
 #  @author Barrett Hostetter-Lewis
 #  @date   5/7/2012
-                   
+
 ## The data model.
 #  This class maintains interactions between the program and the database.
 #
@@ -21,7 +21,7 @@ import sys                           #allows us to abort if there is an issue
 #  The first is that allows user interactions with the database file, and the second
 #  is the one that is run to actually complete the backup process.
 #  Since it will be the common api it will save a lot of the work of duplicate programming
-class Model:
+class __Model:
 
   ## @var _XmlTree 
   #  The xml element tree
@@ -269,3 +269,16 @@ while again:
 
   print('\n')
 '''
+## @var _instance
+#  The instance of our model
+_instance = None
+
+## Get the instance
+#  @retval Model The current Model instance for the program
+#  @brief  This function allows all parts of the program to get the same
+#          instance of the model when needed.
+def GetInstance():
+  global _instance#we want to use the modules instance variable
+  if _instance == None:
+    _instance = __Model()
+  return _instance
