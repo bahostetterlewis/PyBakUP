@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['getbackupdata',['GetBackUpData',['../classbumodel_1_1_model.html#ab88d2e554b6578e0759fd9d4231081cc',1,'bumodel::Model']]]
+  ['getbackupdata',['GetBackUpData',['../classbumodel_1_1_____model.html#aa8f5d03bc7d52864006dba4284637ae8',1,'bumodel::__Model']]],
+  ['getinstance',['GetInstance',['../namespacebumodel.html#a2660327f9a359f3e000f2f955bec92b2',1,'bumodel']]]
 ];

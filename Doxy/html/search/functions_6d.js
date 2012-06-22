@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['modifyitem',['ModifyItem',['../classbumodel_1_1_model.html#aba9ece059cb2c118b3dbdaaa88e4e096',1,'bumodel::Model']]]
+  ['modifyitem',['ModifyItem',['../classbumodel_1_1_____model.html#a0122ab9d88be7ea0adeca116634c4219',1,'bumodel::__Model']]]
 ];

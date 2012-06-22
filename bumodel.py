@@ -10,6 +10,21 @@ import sys                           #allows us to abort if there is an issue
 #  @author Barrett Hostetter-Lewis
 #  @date   5/7/2012
 
+## @var _instance
+#  The instance of our model
+_instance = None
+
+## Get the instance
+#  @retval Model The current Model instance for the program
+#  @brief  This function allows all parts of the program to get the same
+#          instance of the model when needed.
+def GetInstance():
+  global _instance#we want to use the modules instance variable
+  if _instance == None:
+    _instance = __Model()
+    print("instantiating")
+  return _instance                                            
+
 ## The data model.
 #  This class maintains interactions between the program and the database.
 #
@@ -234,51 +249,38 @@ class __Model:
     root.append(xml.Element('bl'))
     self._XmlTree = xml.ElementTree(root)
 
-''' 
+
 #This is a testing interface for the model
 #for the first tests of functionality
-model = Model()
+if __name__ == '__main__':
+  model = __Model()
 
-again = True
-while again:
-  backupItems = model.GetBackUpData()
-  for item in sorted(backupItems, key = lambda item: item.lower()):
-    print (item)
+  again = True
+  while again:
+    backupItems = model.GetBackUpData()
+    for item in sorted(backupItems, key = lambda item: item.lower()):
+      print (item)
 
-  action = input('Command:')                
+    action = input('Command:')                
 
-  #def AddBackUpItem(self, source, itemType, title, description=''):
-  if action == 'add':
-    itemType = input('type:')
-    location = input('location:')
-    name = input('name:')
-    description = input('description:')
-    model.AddBackUpItem(location, itemType, name, description)
-  elif action == 'save':
-    model.Save()
-  elif action == 'remove':
-    itemName = input('name:')
-    model.RemoveBackUpItem(backupItems[itemName]['source'])
-  elif action == 'quit':
-    again = False
-  elif action == 'mod':
-    model.ModifyItem('c:','description','testval')
-  elif action == 'print':
-    itemName = input('name:')
-    print(backupItems.get(itemName, ''))
+    #def AddBackUpItem(self, source, itemType, title, description=''):
+    if action == 'add':
+      itemType = input('type:')
+      location = input('location:')
+      name = input('name:')
+      description = input('description:')
+      model.AddBackUpItem(location, itemType, name, description)
+    elif action == 'save':
+      model.Save()
+    elif action == 'remove':
+      itemName = input('name:')
+      model.RemoveBackUpItem(backupItems[itemName]['source'])
+    elif action == 'quit':
+      again = False
+    elif action == 'mod':
+      model.ModifyItem('c:','description','testval')
+    elif action == 'print':
+      itemName = input('name:')
+      print(backupItems.get(itemName, ''))
 
-  print('\n')
-'''
-## @var _instance
-#  The instance of our model
-_instance = None
-
-## Get the instance
-#  @retval Model The current Model instance for the program
-#  @brief  This function allows all parts of the program to get the same
-#          instance of the model when needed.
-def GetInstance():
-  global _instance#we want to use the modules instance variable
-  if _instance == None:
-    _instance = __Model()
-  return _instance
+    print('\n')

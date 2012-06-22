@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['addbackupitem',['AddBackUpItem',['../classbumodel_1_1_model.html#aa028363d5ff25fa3b938813cef2998bb',1,'bumodel::Model']]]
+  ['addbackupitem',['AddBackUpItem',['../classbumodel_1_1_____model.html#a7bed716c16d1a1f7a687b759b0c4e315',1,'bumodel::__Model']]]
 ];

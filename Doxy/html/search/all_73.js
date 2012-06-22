@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['save',['Save',['../classbumodel_1_1_model.html#a4a175145183882d82ab6c407496e39c0',1,'bumodel::Model']]]
+  ['save',['Save',['../classbumodel_1_1_____model.html#a49992111de15061650c602b43aa6a2c5',1,'bumodel::__Model']]]
 ];
