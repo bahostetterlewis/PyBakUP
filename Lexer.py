@@ -33,23 +33,62 @@ tokens = ['AND',         #&&
           'INT']         #Any integer
 
 
-t_ignore =       ' \t'
-t_AND =          r'&&'
-t_GREATER =      r'>'
-t_LESS =         r'<'
-t_LESS_EQUAL =   r'<='
-t_GREAT_EQUAL =  r'>='
-t_EQUAL =        r'=='
-t_PLUS =         r'\+'
-t_OR =           r'\|\|'
-t_MONTH =        r'mon(th)?s?'
-t_DAY =          r'd((ay)s?)?'
-t_HOUR =         r'h((our)s?)?'
-t_MINUTE =       r'min(ute)?s?'
-t_TRUE =         r'True'
-t_FALSE =        r'False'
-t_LAST_BACKUP =  r'LastBU'
-t_MODIFIED =     r'Modified'
+t_ignore = ' \t'
+def t_AND(t):
+  r'&&'
+  t.value = "AND"
+  return t
+def t_GREATER(t):
+  r'>'
+  t.value = "GREATER"
+  return t
+def t_LESS(t):
+  r'<'
+  t.value = "LESS"
+  return t
+def t_LESS_EQUAL(t):
+  r'<='
+  t.value = "LESS_EQUAL"
+  return t
+def t_GREAT_EQUAL(t):
+  r'>='
+  t.value = "GREAT_EQUAL"
+  return t
+def t_EQUAL(t):
+  r'=='
+  t.value = "EQUAL"
+  return t
+def t_PLUS(t):
+  r'\+'
+  t.value = "PLUS"
+  return t
+def t_OR(t):
+  r'\|\|'
+  t.value = "OR"
+  return t
+def t_MONTH(t):
+  r'mon(th)?s?'
+  t.value = "MONTH"
+  return t
+def t_DAY(t):
+  r'd((ay)s?)?'
+  t.value = "DAY"
+  return t
+def t_HOUR(t):
+  r'h((our)s?)?'
+  t.value = "HOUR"
+  return t
+def t_MINUTE(t):
+  r'min(ute)?s?'
+  t.value = "MINUTE"
+  return t
+t_TRUE = r'True'
+t_FALSE =  r'False'
+def t_LAST_BACKUP(t):
+  r'LastBU'
+  t.value = "LAST_BACKUP"
+  return t
+t_MODIFIED = r'Modified'
 
 def t_INT(t):
   r'\d+'
