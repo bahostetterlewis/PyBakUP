@@ -2,3 +2,4 @@
 *.xml
 *.*.swp
 *.tmp
+__pycache__
