@@ -21,24 +21,28 @@ def p_expr_operator(p):
   if p[2] == "OR":
     p[0] = p[1] or p[3]
   elif p[2] == "AND":
-    p[0] = p[1] and p[2]
+    p[0] = p[1] and p[3]
   elif p[2] == "LESS_EQUAL":
-    p[0] = p[1] <= p[2]
+    p[0] = p[1] <= p[3]
   elif p[2] == "LESS":
-    p[0] = p[1] < p[2]
+    p[0] = p[1] < p[3]
   elif p[2] == "GREAT_EQUAL":
-    p[0] = p[1] >= p[2]
+    p[0] = p[1] >= p[3]
   elif p[2] == "GREATER":
-    p[0] = p[1] > p[2]
+    p[0] = p[1] > p[3]
   elif p[2] == "EQUAL":
-    p[0] = p[1] == p[2]
+    p[0] = p[1] == p[3]
   elif p[2] == "PLUS":
     p[0] = p[1] + p[3]
 
-  print (p[0])
 
-def p_expr_operand(p):
-  '''expr : operand'''
+def p_expr_with_parens(p):
+  '''primary : LPAREN expr RPAREN'''
+  p[0] = p[2]
+
+def p_expr_extra(p):
+  '''expr : operand
+          | primary'''
   p[0] = p[1]
 
 def p_operand_time(p):
@@ -52,7 +56,6 @@ def p_operand_key(p):
 def p_time(p):
   '''time : INT frame'''
   p[0] = p[1] * p[2]
-  print("In time")
 
 def p_frame(p):
   '''frame : MONTH
@@ -86,4 +89,5 @@ def p_key_booleon(p):
     p[0] = False
 
 yacc.yacc()
-yacc.parse('2 hours + 3 mins')
+result = yacc.parse('2 hours + 3 mins && True')
+print ("result", result)

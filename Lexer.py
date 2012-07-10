@@ -30,6 +30,8 @@ tokens = ['AND',         #&&
           'FALSE',       #False
           'LAST_BACKUP', #LastBU
           'MODIFIED',    #Modified
+          'LPAREN',      #(
+          'RPAREN',      #)
           'INT']         #Any integer
 
 
@@ -87,6 +89,14 @@ t_FALSE =  r'False'
 def t_LAST_BACKUP(t):
   r'LastBU'
   t.value = "LAST_BACKUP"
+  return t
+def t_LPAREN(t):
+  r'\('
+  t.VALUE = "LPAREN"
+  return t
+def t_RPAREN(t):
+  r'\)'
+  t.value = "RPAREN"
   return t
 t_MODIFIED = r'Modified'
 
