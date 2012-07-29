@@ -12,3 +12,4 @@ way to manage backups across their system.
 ### Requirements
 * Python 3.2
 * Tkinter TTK
+* [PLY](http:http://www.dabeaz.com/ply/) - A Python implementation of Lex and Yacc
