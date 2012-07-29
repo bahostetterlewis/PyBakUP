@@ -14,4 +14,4 @@ way to manage backups across their system.
 * Tkinter TTK
 * [PLY](http://www.dabeaz.com/ply/) - A Python implementation of Lex and Yacc
 
-_For indepth documentation view the doxygen pages for the master branch [here](thebearbear.github.com/PyBakUP/html/)_
+_For indepth documentation view the doxygen pages for the master branch [here](http://thebearbear.github.com/PyBakUP/html/)_
