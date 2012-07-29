@@ -1,0 +1,24 @@
+from tkinter import *
+import bumodel
+
+##Main function
+# This is the programs starting point
+def Main():
+  instance = bumodel.GetInstance()
+  itemList = instance.GetBackUpData()
+
+  master = Tk()
+
+  listbox = Listbox(master)
+  listbox.pack()
+  PopulateList(listbox)
+
+  mainloop()
+
+def PopulateList(listbox):
+  for item in sorted(bumodel.GetInstance().GetBackUpData(), key = lambda item: item.lower()):
+    listbox.insert(END, item)
+
+
+if __name__ == "__main__":
+  Main()
