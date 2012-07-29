@@ -2,5 +2,6 @@
 *.xml
 *.*.swp
 *.tmp
-.\Doxy
-
+__pycache__
+*.out
+parsetab.py
