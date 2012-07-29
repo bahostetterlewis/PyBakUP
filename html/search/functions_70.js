@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['python_20backup_20utility_3a_20pybakup',['Python Backup Utility: PyBakUP',['../md__readme.html',1,'']]],
   ['p_5fexpr_5fextra',['p_expr_extra',['../namespace_parser.html#a4258fc891de826899587370fec7f96a5',1,'Parser']]],
   ['p_5fexpr_5foperator',['p_expr_operator',['../namespace_parser.html#ab31e76814b58c0f8d78e4d93c997cbb8',1,'Parser']]],
   ['p_5fexpr_5fwith_5fparens',['p_expr_with_parens',['../namespace_parser.html#ae94e15689a28bc6f6b33b310597311ba',1,'Parser']]],
@@ -10,7 +9,5 @@ var searchData=
   ['p_5foperand_5fkey',['p_operand_key',['../namespace_parser.html#a8d31123e7042eccbd1b05ef1d71beeb5',1,'Parser']]],
   ['p_5foperand_5ftime',['p_operand_time',['../namespace_parser.html#a55b12ee019621e30e5ed452811dbf68a',1,'Parser']]],
   ['p_5ftime',['p_time',['../namespace_parser.html#a271393e2aff75d2edc45d86964e6a23f',1,'Parser']]],
-  ['parse',['parse',['../namespace_parser.html#a43c451cfa74ce60d3fe7322612e0f703',1,'Parser']]],
-  ['parser',['Parser',['../namespace_parser.html',1,'']]],
-  ['precedence',['precedence',['../namespace_parser.html#a0a5def6a2034a98c6545d6d7402f2338',1,'Parser']]]
+  ['parse',['parse',['../namespace_parser.html#a43c451cfa74ce60d3fe7322612e0f703',1,'Parser']]]
 ];
