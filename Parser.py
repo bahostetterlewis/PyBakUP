@@ -14,7 +14,7 @@ tokens = Lexer.tokens
 #  @author Barrett Hostetter-Lewis
 #  @date 5/28/2012
 
-## @var
+## @var precedence
 #  The precedence chart used by the parser.
 #  Each item has the pattern (associativity, list_of_tokens)
 #  Their order determines the precedence in decending order.

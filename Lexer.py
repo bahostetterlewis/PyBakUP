@@ -151,9 +151,11 @@ def t_MINUTE(t):
   t.value = "MINUTE"
   return t
 
-## @var regex for the True token
+## @var t_TRUE 
+#  regex for the True token
 t_TRUE = r'True'
-## @var regex for the False token
+## @var t_FALSE
+#  regex for the False token
 t_FALSE =  r'False'
 
 ## LastBU token
