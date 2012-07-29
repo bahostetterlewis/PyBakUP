@@ -35,6 +35,7 @@ class Model:
   #  @param self The current instance pointer
   #  @todo Decide whether or not to save on a bad parse (my assumption is that we have a bad xml file and i'm not sure how to recover from that yet)
   def __init__(self):
+    print('running init')
     if not path.exists('PyBakUP.xml'): #if the file doens't exist lets make it and set defaults
       self._InitElementTree()  
       self.Save()
@@ -234,12 +235,9 @@ class Model:
     root.append(xml.Element('bl'))
     self._XmlTree = xml.ElementTree(root)
 
-''''''''''''''''''
-'''DELETE BELOW'''
-''''''''''''''''''
-#temporary interface to the model
+'''
+#This is a testing interface for the model
 #for the first tests of functionality
-#will be deleted
 model = Model()
 
 again = True
@@ -271,3 +269,4 @@ while again:
     print(backupItems.get(itemName, ''))
 
   print('\n')
+'''
