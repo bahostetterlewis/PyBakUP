@@ -3,3 +3,5 @@
 *.*.swp
 *.tmp
 __pycache__
+*.out
+parsetab.py
