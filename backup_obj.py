@@ -14,6 +14,16 @@ import datetime
 #  to be backed up. Mostley a container class.
 class BackupObject(object):
 
+  ## @var __properties
+  #  legal properties
+  __properties = ['Name',
+                  'Description',
+                  'Location',
+                  'Backup',
+                  'LastBackup',
+                  'Group',
+                  'Id']
+
   ## Constructor
   #  @pre  There should be a valid unique id.
   #  @post The object is instantiated with the values
@@ -34,7 +44,8 @@ class BackupObject(object):
     self._Id = id
     #initialize all values passed to the obj
     for key in args:
-      exec('self._' + key + '=' + args[key])
+      if key in __properties:#limit to properties that are valid
+        exec('self._' + key + '=' + args[key])
 
   ## Name
   #  @brief Name property, allows you to get the Name variable
