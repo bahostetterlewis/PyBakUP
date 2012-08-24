@@ -83,7 +83,7 @@ class BackupObject(object):
   #  @retval bool True if the the item wants to be backed up, false otherwise
   @property
   def Backup(self):
-    return _Backup()
+    return _Backup(self)
 
   
   ## Backup
