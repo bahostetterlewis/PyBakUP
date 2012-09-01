@@ -33,7 +33,8 @@ class BackupObject(object):
   #  @param **args arbitrary number of params with a key
   #         Name, Description, Location, Backup, Group, Id are allowed
   #  @brief Constructs the objects allowing for custom initialization
-  def __init__(self, id, **args):
+  #  @TODO Have to implement id - not used yet
+  def __init__(self, **args):
     #Set values that must be there
     self._Name = ""
     self._Description = ""
@@ -41,7 +42,7 @@ class BackupObject(object):
     self._Backup = lambda obj: true
     self._LastBackup =  datetime.datetime.now
     self._Group = "default"
-    self._Id = id
+    self._Id = 0
     #initialize all values passed to the obj
     for key in args:
       if key in __properties:#limit to properties that are valid

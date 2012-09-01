@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as xml  #holds our database object
 from os import path                  #for checking if the xml file exists
 import sys                           #allows us to abort if there is an issue
+from backup_obj import BackupObject
 
 ## @package bumodel
 #  This contains the definitions for our model object.
@@ -82,8 +83,7 @@ class Model:
   #  It doesn't actually perform the insert until it is confirmed that the new entry
   #  isn't a duplicate.
   def AddBackUpItem(self, source, itemType, title, description=''):
-    bl = self._GetBackupList()
-    backupItems = bl.findall('bi')
+    backupItems = self._GetAllBackupItems()
 
     #here we check to ensure the type was set
     #we also ensure that the source isn't already backed up
@@ -122,42 +122,18 @@ class Model:
   #  @pre  The tree must not be corrupt
   #  @post None
   #  @param self The current instance pointer
-  #  @retval dicitonary The elements in the backup list are placed inside this dictionary 
-  #                     of dictionaries containing each items data.
+  #  @retval 
   #
   #  @brief This function is used to get detailed information about the items in the backup
   #         list. It gives the program a way to take all the attributes associated with
   #         a given node and apply it to however is necessary. The dictionary is indexed
   #         by the items title.
-  def GetBackUpData(self):
-    bl = self._GetBackupList()
-    backupItems = bl.findall('bi')
-    #the list we of all file/folder names
-    backupItemsValues = {}
+  def GetBackupData(self):
+    backupItems = self._GetAllBackupItems()
 
     for backupItem in backupItems:
-      itemData = {}
-      #get item details
-      itemData['source'] = backupItem.get('src')
-      itemData['type'] = backupItem.get('type')
-      #get item backup preferences
-      frequency = backupItem.find('frequency')
-      itemData['last'] = frequency.get('last')
-      itemData['condition'] = frequency.get('condition')
-      #get item description
-      description = backupItem.find('description')
-      descriptionText = ''
-      if description != None:
-        descriptionText = description.text
-      itemData['description'] = descriptionText
-      
-      #get item name
-      name = backupItem.find('title').text
-
-      #add our info to the list
-      backupItemsValues[name] = itemData
-
-    return backupItemsValues
+      item = Model.ConvertElementToBackupObj(backupItem)
+      yield item
 
   ## Remove a backup item from the database.
   #  @pre  The xml structure must be intact
@@ -169,8 +145,7 @@ class Model:
   #  @brief This function gives a way of deleting an item from out
   #         xml database. It only deletes backup items.
   def RemoveBackUpItem(self, source):
-    bl = self._GetBackupList()
-    backupItems = bl.findall('bi')
+    backupItems = self._GetAllBackupItems()
     
     for backupItem in backupItems:
       if backupItem.get('src') == source:
@@ -190,8 +165,7 @@ class Model:
   #         attributes for a backup item. It handles modifying at any
   #         level of nesting that is needed for the attribute.
   def ModifyItem(self, source, attribute, attributeValue):
-    bl = self._GetBackupList()
-    backupItems = bl.findall('bi')
+    backupItems = self._GetAllBackupItems()
 
     itemForModification = None
     for backupItem in backupItems:
@@ -217,17 +191,30 @@ class Model:
   #  @post None
   #  @param self the current instance
   #  @retval element The backup liste element instance
+  #
   #  @brief This function is mainly a helper for use inside of the model class
   #         by allowing a simple easy to read way of getting back the backup list
   #         element directly.                               
   def _GetBackupList(self):
     return self._XmlTree.getroot().find('bl')
 
+  ## Get a list of all the backup items
+  #  @pre  The xml structure should be intact
+  #  @post None
+  #  @param self The current instance
+  #  @retval list All the backup items in the db are returned as elements
+  #
+  #  @brief  This encapsulates the process of getting all the backup items out of the db
+  def _GetAllBackupItems(self):
+    return self._GetBackupList().findall('bi')
+
   ## Initialize an empty tree
   #  @pre  The main _XmlTree variable should NOT be set at this point
   #  @post The main _XmlTree variable is now set to an empty database
   #        effictively initializing the primary database to its minimal working
   #        state.
+  #  @param self The current instance
+  #
   #  @brief This function is a utility function for creating and setting up a default
   #         element tree. This allows us to create a new tree on the fly when necessary.
   def _InitElementTree(self):
@@ -235,38 +222,75 @@ class Model:
     root.append(xml.Element('bl'))
     self._XmlTree = xml.ElementTree(root)
 
-'''
+
+  ## Get a backup object by name
+  #  @pre  The main _XmlTree variabe should be a valid tree
+  #  @post The tree is searched for a backup object with a specific name
+  #        and, if found, builds the backup_obj to contain that information
+  #  @param self The current instance
+  #  @param name The name of the object being searched for in the db
+  #  @retval Backup_Obj Contains the data from the db, and None if it wasn't in the db
+  #
+  #  @brief Allows access to a specific item if necessary, that way if a handle isn't
+  #         available for the specific element it is still possible to get its information
+  def GetItemByName(self, name):
+    bl = self._GetAllBackupItems()
+    result = None
+    for item in bl:
+      if item.find('title').text == name:
+        return ConvertElementToBackupObj(item)
+  
+
+  ## Convert a backup element into a backup_obj
+  #  @pre None
+  #  @post None
+  #  @param self The current instance
+  #  @param element The element to be converted
+  #  @retval Backup_Obj The converted backup element
+  #
+  #  @brief This function allows conversion from a backup 
+  #  @TODO Backup isn't set yet - need to figure this out
+  def ConvertElementToBackupObj(element):
+    source =  element.get('src')
+    itemType = element.get('type')
+    frequency = element.find('frequency')
+    condition = element.find('frequency').get('condition')
+    last = element.find('frequency').get('last')
+    title = element.find('title').text
+    description = element.find('description').text
+    result = BackupObject()#Name=title, Description=description, Location=source, LastBackup=last)
+    return result
+
 #This is a testing interface for the model
 #for the first tests of functionality
-model = Model()
+if __name__ == "__main__":
+  model = Model()
 
-again = True
-while again:
-  backupItems = model.GetBackUpData()
-  for item in sorted(backupItems, key = lambda item: item.lower()):
-    print (item)
+  again = True
+  while again:
+    for item in model.GetBackupData():
+      print (item)
 
-  action = input('Command:')                
-
-  #def AddBackUpItem(self, source, itemType, title, description=''):
-  if action == 'add':
-    itemType = input('type:')
-    location = input('location:')
-    name = input('name:')
-    description = input('description:')
-    model.AddBackUpItem(location, itemType, name, description)
-  elif action == 'save':
-    model.Save()
-  elif action == 'remove':
-    itemName = input('name:')
-    model.RemoveBackUpItem(backupItems[itemName]['source'])
-  elif action == 'quit':
-    again = False
-  elif action == 'mod':
-    model.ModifyItem('c:','description','testval')
-  elif action == 'print':
-    itemName = input('name:')
-    print(backupItems.get(itemName, ''))
-
+    action = input('Command:')                
+                                        
+    #def AddBackUpItem(self, source, itemType, title, description=''):
+    if action == 'add':
+      itemType = input('type:')
+      location = input('location:')
+      name = input('name:')
+      description = input('description:')
+      model.AddBackUpItem(location, itemType, name, description)
+    elif action == 'save':
+      model.Save()
+    elif action == 'remove':
+      itemName = input('name:')
+      obj = self.GetItemByName(itemName)
+      model.RemoveBackUpItem(obj.Location)
+    elif action == 'quit':
+      again = False
+    elif action == 'mod':
+      model.ModifyItem('c:','description','testval')
+    elif action == 'print':
+      itemName = input('name:')
+      print(backupItems.get(itemName, ''))
   print('\n')
-'''
